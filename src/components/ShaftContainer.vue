@@ -4,15 +4,25 @@ import config from '../config/default.json'
 import ElevatorFor from './ElevatorFor.vue'
 
 const elevator = config.ELEVATOR
+
+// const evenNumbers = computed(() => {
+//     return [...elevator].reverse()
+// })
+
 </script>
 
 <template>
-    <div>
-        <ElevatorFor v-for="item in elevator" :key="item"/>
+    <div class="main__shaft">
+        <ElevatorFor v-for="(item, i) in elevator" :key="item" :floor="item"/>
     </div>
 </template>
 
 
-<style lang="scss" scoped>
-
+<style scoped>
+.main__shaft {
+width: 100%;
+display: flex;
+flex-direction: column;
+flex-flow: column-reverse;
+}
 </style>

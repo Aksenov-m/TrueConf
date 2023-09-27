@@ -8,7 +8,7 @@ const shaft = config.SHAFT
 
 <template>
 
-  <main>
+  <main class="main">
     <ShaftContainer  v-for="item in shaft" :key="item"/>
   </main>
 </template>
@@ -18,9 +18,10 @@ header {
   line-height: 1.5;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+.main {
+  display: flex;
+  flex-direction: column;
+
 }
 
 @media (min-width: 1024px) {
