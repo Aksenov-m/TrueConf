@@ -1,9 +1,12 @@
 <script setup>
-
+import { ref, provide } from 'vue'
 import ShaftContainer from './components/ShaftContainer.vue'
 import config from './config/default.json'
 
 const shaft = config.SHAFT
+
+const floors = ref([1])
+provide('floors', floors)
 </script>
 
 <template>

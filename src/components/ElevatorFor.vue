@@ -1,7 +1,10 @@
 <script setup>
 import InformationBoard from "./InformationBoard.vue";
 import ButtonElevator from "./ButtonElevator.vue";
-// import { faElevator } from '@fortawesome/free-solid-svg-icons'
+
+import { inject } from 'vue'
+
+const floors = inject('floors')
 
 const props = defineProps(["floor"]);
 </script>
@@ -15,6 +18,7 @@ const props = defineProps(["floor"]);
         class="fa-8x icon elevator-icon"
       />
     </div>
+    <p>{{floors[0]}}</p>
     <ButtonElevator />
   </div>
 </template>
