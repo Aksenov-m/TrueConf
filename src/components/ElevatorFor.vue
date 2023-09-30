@@ -7,6 +7,20 @@ import { inject } from 'vue'
 const floors = inject('floors')
 
 const props = defineProps(["floor"]);
+const emit = defineEmits(['handlerClick'])
+
+function buttonClick() {
+  emit('handlerClick', props.floor)
+}
+
+// const emit = defineEmits(['handlerClic'])
+// function increaseFloor(f) {
+//   // for (let i = floors.value[0]; i <= f; i += 2) {
+//   //   floors.value.push(i);
+//   // }
+//   console.log(f)
+// }
+
 </script>
 
 <template>
@@ -19,7 +33,7 @@ const props = defineProps(["floor"]);
       />
     </div>
     <p>{{floors[0]}}</p>
-    <ButtonElevator />
+    <ButtonElevator @click="buttonClick"/>
   </div>
 </template>
 

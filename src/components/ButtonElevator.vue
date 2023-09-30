@@ -1,11 +1,12 @@
+<script setup>
+// const props = defineProps(["floor"]);
+</script>
+
 <template>
   <button class="button">
     <font-awesome-icon :icon="['fas', 'circle-dot']" class="fa-xl" />
   </button>
 </template>
-
-<script setup>
-</script>
 
 <style scoped>
 .button {
