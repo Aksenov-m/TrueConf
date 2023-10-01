@@ -4,7 +4,7 @@ import ButtonElevator from "./ButtonElevator.vue";
 
 import { inject } from 'vue'
 
-const floors = inject('floors')
+const elevators = inject('elevators')
 
 const props = defineProps(["floor"]);
 const emit = defineEmits(['handlerClick'])
@@ -32,7 +32,7 @@ function buttonClick() {
         class="fa-8x icon elevator-icon"
       />
     </div>
-    <p>{{floors[0]}}</p>
+    <!-- <p>{{elevators.floors[0]}}</p> -->
     <ButtonElevator @click="buttonClick"/>
   </div>
 </template>

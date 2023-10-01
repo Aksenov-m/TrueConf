@@ -5,15 +5,63 @@ import config from "./config/default.json";
 
 const shaft = config.SHAFT;
 
-const floors = ref([1]);
-provide("floors", floors);
+// const elevators = {
+//   floors: [1, 2],
+//   isStop: [false, false, false, false, false]
+// }
 
-function increaseFloor(f) {
-  // for (let i = floors.value[0]; i <= f; i += 2) {
-  //   floors.value.push(i);
-  // }
-  console.log(f)
+const elevators = ref({
+  floor: 1,
+  isStop: [false, false, false, false, false],
+});
+
+provide("elevators", elevators);
+
+async function getData(i) {
+  return new Promise((res) => {
+    setTimeout(() => {
+      res(i);
+    }, 1000);
+  });
 }
+
+// function cleaning(i) {
+//   elevators.value.isStop[i] = true;
+//   console.log(elevators.value);
+// }
+
+// function counter(f, floor) {
+//   for (let i = floor; i <= f; i++) {
+//     setTimeout(function () {
+//       elevators.value.floors.push(i);
+//       console.log("Я выполняюсь каждую секунду" + i);
+//     }, 1000 * i);
+//   }
+// }
+
+async function increaseFloor(f) {
+  let floor = elevators.value.floor;
+  // let num = Number(f);
+  // if (floor) {
+  //   elevators.value.isStop[f] = true;
+  if (f > floor) {
+    for (let i = ++floor; i <= f; i++) {
+      console.log(i);
+      elevators.value.floor = await getData(i);
+    }
+    // cleaning(f);
+    console.log(elevators.value.floor);
+  } else if (f < floor) {
+    for (let i = --floor; i >= f; i--) {
+      console.log(i);
+      elevators.value.floor = await getData(i);
+    }
+ } else {
+  return
+    // console.log("Привет, пользователь!");
+  }
+}
+// cleaning(f);
 </script>
 
 <template>
