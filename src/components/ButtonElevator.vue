@@ -1,9 +1,11 @@
 <script setup>
-// const props = defineProps(["floor"]);
+// const props = defineProps(["isDisabled"]);
+
 </script>
 
 <template>
-  <button class="button">
+  <!-- <p>{{props.isDisabled}}</p> -->
+  <button class="button" >
     <font-awesome-icon :icon="['fas', 'circle-dot']" class="fa-xl" />
   </button>
 </template>

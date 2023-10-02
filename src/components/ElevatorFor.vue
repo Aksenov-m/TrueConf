@@ -1,13 +1,19 @@
 <script setup>
+import { computed, inject } from 'vue'
+
 import InformationBoard from "./InformationBoard.vue";
 import ButtonElevator from "./ButtonElevator.vue";
-
-import { inject } from 'vue'
 
 const elevators = inject('elevators')
 
 const props = defineProps(["floor"]);
 const emit = defineEmits(['handlerClick'])
+
+// const isCall = ref(false)
+// const isCall = () => elevators.floor === props.floor
+const isCall = computed(() => {
+  return elevators.value.floor === props.floor ? true : false
+})
 
 function buttonClick() {
   emit('handlerClick', props.floor)
@@ -26,14 +32,15 @@ function buttonClick() {
 <template>
   <div class="elevator">
    <div class="elevator__cabin">
-    <InformationBoard :floor="props.floor" />
+    <InformationBoard :floor="props.floor" :active="isCall"/>
       <font-awesome-icon
         :icon="['fas', 'elevator']"
+        :class="[{ active: isCall }]"
         class="fa-8x icon elevator-icon"
       />
     </div>
-    <!-- <p>{{elevators.floors[0]}}</p> -->
-    <ButtonElevator @click="buttonClick"/>
+    <!-- <p>{{elevators.floor}}</p> -->
+    <ButtonElevator @click="buttonClick" :disabled="isCall"/>
   </div>
 </template>
 
@@ -60,5 +67,9 @@ function buttonClick() {
 
 .elevator-icon {
   border-top: 1px solid gray;
+}
+
+.active {
+  background-color: aqua;
 }
 </style>
