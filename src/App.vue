@@ -1,5 +1,5 @@
 <script setup>
-import { ref, provide, watch, nextTick } from "vue";
+import { ref, provide, watch, onBeforeMount, reactive, onUpdated, onBeforeUpdate, computed, onMounted, nextTick } from "vue";
 import ShaftContainer from "./components/ShaftContainer.vue";
 import config from "./config/default.json";
 
@@ -10,10 +10,21 @@ const shaft = config.SHAFT;
 //   isStop: [false, false, false, false, false]
 // }
 
-const elevators = ref({
-  floor: 1
+const elevators = reactive({
+  floor: 1,
 });
-let floor = elevators.value.floor;
+
+// watch(elevators.value, (floor) => {
+//   localStorage.setItem('floor', floor);
+//   // localStorage.floor = floor;
+// });
+
+onBeforeMount(() => { 
+  if (localStorage.floor) {
+    elevators.floor = localStorage.floor;
+  }
+});
+
 // const count = ref(0)
 // watch(count, (count) => {
 //   console.log(`count is: ${count}`)
@@ -30,11 +41,11 @@ async function getData(i) {
 }
 
 async function assignments(i) {
-  elevators.value.floor = await getData(i);
+  elevators.floor = await getData(i);
 }
-watch(elevators.value, (floor) => {
-  console.log(`count is: ${floor}`)
-})
+// watch(elevators.value, (floor) => {
+//   console.log(`count is: ${floor}`);
+// });
 // watch(elevators.floor, (floor) => {
 //   console.log("dfsd")
 // })
@@ -54,32 +65,34 @@ watch(elevators.value, (floor) => {
 // }
 
 async function increaseFloor(f) {
+  let floor = elevators.floor;
   // let num = Number(f);
   // if (floor) {
   //   elevators.value.isStop[f] = true;
   if (f > floor) {
     for (let i = ++floor; i <= f; i++) {
-      console.log("сука1", floor);
-      await assignments(i)
+      console.log("сук", floor);
+      await assignments(i);
       // elevators.value.floor = await getData(i);
     }
     // cleaning(f);
     // console.log(elevators.value.floor);
   } else if (f < floor) {
     for (let i = --floor; i >= f; i--) {
-      console.log("сука2", elevators.value.floor);
-      await assignments(i)
+      console.log("сук", elevators.floor);
+      await assignments(i);
       // elevators.value.floor = await getData(i);
     }
- } else {
-  return
+  } else {
+    return;
     // console.log("Привет, пользователь!");
   }
+  localStorage.setItem('floor', elevators.floor);
 }
 
 async function increase(f) {
   // await nextTick ();
-  await increaseFloor(f)
+  await increaseFloor(f);
 }
 // cleaning(f);
 </script>
