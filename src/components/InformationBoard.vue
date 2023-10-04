@@ -1,23 +1,29 @@
 <script setup>
 import { watch, inject } from "vue";
 
-const props = defineProps(["floor", "active"]);
+const props = defineProps(["floor", "active", "isUp"]);
 
 const elevators = inject("elevators");
 
 // const isCall = computed(() => {
 //   return elevators.value.floor === props.floor ? true : false
 // })
-
 </script>
 
 <template>
   <div class="information-board">
-    <font-awesome-icon :icon="['fas', 'eject']" />
+    <font-awesome-icon
+      :icon="['fas', 'eject']"
+      :class="[{ active: props.isUp }]"
+    />
     <p class="information-board__text" :class="[{ active: props.active }]">
       {{ elevators.floor }}
     </p>
-    <font-awesome-icon :icon="['fas', 'eject']" class="fa-rotate-180" />
+    <font-awesome-icon
+      :icon="['fas', 'eject']"
+      class="fa-rotate-180"
+      :class="[{ active: !props.isUp }]"
+    />
   </div>
 </template>
 

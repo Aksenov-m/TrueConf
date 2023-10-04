@@ -1,22 +1,44 @@
 <script setup>
-import {watchEffect, computed, inject, reactive, ref, onMounted, watch } from 'vue'
+import {
+  watchEffect,
+  computed,
+  watchPostEffect,
+  inject,
+  reactive,
+  ref,
+  onMounted,
+  watch,
+} from "vue";
 
 import InformationBoard from "./InformationBoard.vue";
 import ButtonElevator from "./ButtonElevator.vue";
 
-const elevators = inject('elevators')
-const props = defineProps(["floor"]);
-const emit = defineEmits(['handlerClick'])
+const elevators = inject("elevators");
+const props = defineProps(["floor", "startFloor"]);
+const emit = defineEmits(["handlerClick"]);
 
 // const isCall = ref(false)
-const isCall = reactive({count: false})
+const isCall = reactive({ count: false });
+const isUp = reactive({ count: false });
 
-watchEffect(() => {
-  const response = elevators.floor
-  isCall.count = response == props.floor ? true : false
-})
-// watch(isCall.count, (count) => {
-//   count = elevators.floor == props.floor ? true : false
+// function isUp() {
+//   return props.startFloor < props.floor ? true : false;
+// }
+
+watch(elevators, async() => {
+  const startFloor = localStorage.floor ? localStorage.floor : 1;
+  console.log(startFloor)
+  // const response =  await props.startFloor;
+  // console.log(elevators.floor, response, props.floor)
+  isCall.count = elevators.floor == props.floor ? true : false;
+  isUp.count = elevators.floor > startFloor && props.floor <= elevators.floor? true : false;
+  console.log(props.startFloor, elevators.floor, props.floor, isUp.count)
+});
+
+// watchEffect(elevators, () => {
+//   isCall.count = elevators.floor == props.floor ? true : false;
+//   isUp.count = props.startFloor < props.floor ? true : false;
+//   console.log(props.startFloor, props.floor)
 // });
 
 // watch(isCall, (elevators) => {
@@ -26,17 +48,19 @@ watchEffect(() => {
 // const isCall = () => elevators.floor === props.floor
 // onBeforeUpdate(() => {const isCall = elevators.value.floor === props.floor ? true : false})
 
-//  computed((isCall.count) => count = elevators.floor == props.floor ? true : false
+//  const isUp = computed(() => elevators.floor / props.floor > 1 ? true : false
 // )
 
 onMounted(() => {
-  if(elevators.floor == props.floor) {
-    isCall.count = true
-  } else {console.log(elevators.floor, props.floor)}
-  
+  if (elevators.floor == props.floor) {
+    isCall.count = true;
+  } else {
+    console.log(elevators.floor, props.floor);
+  }
+
   // eslint-disable-next-line no-const-assign
   // isCall = elevators.floor === props.floor ? true : false
-})
+});
 
 // onMounted(() => {
 //  computed(() => {
@@ -46,7 +70,7 @@ onMounted(() => {
 // });
 
 function buttonClick() {
-  emit('handlerClick', props.floor)
+  emit("handlerClick", props.floor);
 }
 
 // const emit = defineEmits(['handlerClic'])
@@ -56,13 +80,16 @@ function buttonClick() {
 //   // }
 //   console.log(f)
 // }
-
 </script>
 
 <template>
   <div class="elevator">
-   <div class="elevator__cabin">
-    <InformationBoard :floor="props.floor" :active="isCall.count"/>
+    <div class="elevator__cabin">
+      <InformationBoard
+        :floor="props.floor"
+        :active="isCall.count"
+        :isUp="isUp.count"
+      />
       <font-awesome-icon
         :icon="['fas', 'elevator']"
         :class="[{ active: isCall.count }]"
@@ -70,7 +97,7 @@ function buttonClick() {
       />
     </div>
     <!-- <p>{{elevators.floor}}</p> -->
-    <ButtonElevator @click="buttonClick" :disabled="isCall.count"/>
+    <ButtonElevator @click="buttonClick" :disabled="isCall.count" />
   </div>
 </template>
 

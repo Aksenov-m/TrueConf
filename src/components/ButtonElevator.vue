@@ -20,4 +20,8 @@
   margin-left: 10px;
   cursor: pointer;
 }
+
+.button:hover {
+  color: green;
+}
 </style>

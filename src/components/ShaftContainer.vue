@@ -5,6 +5,8 @@ import ElevatorFor from "./ElevatorFor.vue";
 
 const elevator = config.ELEVATOR;
 
+const props = defineProps(["startFloor"]);
+
 const emit = defineEmits(['handlerClick'])
 
 function handlerClick(f) {
@@ -19,10 +21,11 @@ function handlerClick(f) {
 <template>
   <div class="main__shaft">
     <ElevatorFor
-      v-for="(item, i) in elevator"
+      v-for="(item, index) in elevator"
       :key="item"
       :floor="item"
       @handler-click="handlerClick"
+      :startFloor="props.startFloor"
     />
   </div>
 </template>

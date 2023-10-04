@@ -1,5 +1,18 @@
 <script setup>
-import { ref, provide, watch, onBeforeMount, reactive, onUpdated, onBeforeUpdate, computed, onMounted, nextTick } from "vue";
+import {
+  ref,
+  watch,
+  provide,
+  watchEffect,
+  watchPostEffect,
+  onBeforeMount,
+  reactive,
+  onUpdated,
+  onBeforeUpdate,
+  computed,
+  onMounted,
+  nextTick,
+} from "vue";
 import ShaftContainer from "./components/ShaftContainer.vue";
 import config from "./config/default.json";
 
@@ -14,12 +27,46 @@ const elevators = reactive({
   floor: 1,
 });
 
+const startFloor = reactive({
+  count: 1,
+});
+
+// const floorUp = reactive({count: null})
+
+// const startFloor = computed(() => {
+//   if (localStorage.floor) {
+//     return localStorage.floor;
+//   } else {
+//     return 1;
+//   }
+// });
+
+// watch(elevators, async() => {
+//   await res = 
+//   if (localStorage.floor) {
+//   startFloor.count = localStorage.floor
+// }
+// });
+
+// watchEffect(() => {
+
+// // console.log(elevators.floor, response, props.floor)
+// // isCall.count = elevators.floor == props.floor ? true : false;
+// // floorUp.count = elevators.floor;
+// console.log(floorUp.count)
+// })
+// const isUp = reactive({count: false})
+
+// watchEffect(async() => {
+//   const res = await elevators.floor;
+//   isUp.count = props.floor <= res ? true : false;
+// })
 // watch(elevators.value, (floor) => {
 //   localStorage.setItem('floor', floor);
 //   // localStorage.floor = floor;
 // });
 
-onBeforeMount(() => { 
+onBeforeMount(() => {
   if (localStorage.floor) {
     elevators.floor = localStorage.floor;
   }
@@ -87,7 +134,7 @@ async function increaseFloor(f) {
     return;
     // console.log("Привет, пользователь!");
   }
-  localStorage.setItem('floor', elevators.floor);
+  localStorage.setItem("floor", elevators.floor);
 }
 
 async function increase(f) {
@@ -99,10 +146,12 @@ async function increase(f) {
 
 <template>
   <main class="main">
+    <p>{{startFloor.count}}</p>
     <ShaftContainer
       v-for="item in shaft"
       :key="item"
       @handler-click="increase"
+      :startFloor="startFloor.count"
     />
   </main>
 </template>

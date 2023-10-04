@@ -1,4 +1,4 @@
 {
     "SHAFT": 1,
-    "ELEVATOR": 5
+    "ELEVATOR": [1, 2, 3, 4, 5]
 }
