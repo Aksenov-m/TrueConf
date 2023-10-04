@@ -6,6 +6,7 @@
 * :point_right: VueJs
 * :point_right: HTML
 * :point_right: CSS
+* :point_right: иконки: fontawesome.com
 ##### версия языка: :ru:
 
 
