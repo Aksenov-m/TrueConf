@@ -13,9 +13,7 @@ function handlerClick(f) {
   emit('handlerClick', f)
 }
 
-// const evenNumbers = computed(() => {
-//     return [...elevator].reverse()
-// })
+
 </script>
 
 <template>

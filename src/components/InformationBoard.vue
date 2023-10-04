@@ -1,13 +1,11 @@
 <script setup>
-import { watch, inject } from "vue";
+import { inject } from "vue";
 
 const props = defineProps(["floor", "active", "isUp"]);
 
 const elevators = inject("elevators");
 
-// const isCall = computed(() => {
-//   return elevators.value.floor === props.floor ? true : false
-// })
+
 </script>
 
 <template>

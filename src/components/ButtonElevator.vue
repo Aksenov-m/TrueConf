@@ -1,10 +1,8 @@
 <script setup>
-// const props = defineProps(["isDisabled"]);
 
 </script>
 
 <template>
-  <!-- <p>{{props.isDisabled}}</p> -->
   <button class="button" >
     <font-awesome-icon :icon="['fas', 'circle-dot']" class="fa-xl" />
   </button>

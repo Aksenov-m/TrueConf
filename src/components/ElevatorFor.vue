@@ -1,85 +1,40 @@
 <script setup>
 import {
-  watchEffect,
-  computed,
-  watchPostEffect,
   inject,
   reactive,
-  ref,
-  onMounted,
   watch,
+  onMounted
 } from "vue";
 
 import InformationBoard from "./InformationBoard.vue";
 import ButtonElevator from "./ButtonElevator.vue";
 
 const elevators = inject("elevators");
-const props = defineProps(["floor", "startFloor"]);
+const props = defineProps(["floor"]);
 const emit = defineEmits(["handlerClick"]);
 
-// const isCall = ref(false)
 const isCall = reactive({ count: false });
 const isUp = reactive({ count: false });
-
-// function isUp() {
-//   return props.startFloor < props.floor ? true : false;
-// }
-
-watch(elevators, async() => {
-  const startFloor = localStorage.floor ? localStorage.floor : 1;
-  console.log(startFloor)
-  // const response =  await props.startFloor;
-  // console.log(elevators.floor, response, props.floor)
-  isCall.count = elevators.floor == props.floor ? true : false;
-  isUp.count = elevators.floor > startFloor && props.floor <= elevators.floor? true : false;
-  console.log(props.startFloor, elevators.floor, props.floor, isUp.count)
-});
-
-// watchEffect(elevators, () => {
-//   isCall.count = elevators.floor == props.floor ? true : false;
-//   isUp.count = props.startFloor < props.floor ? true : false;
-//   console.log(props.startFloor, props.floor)
-// });
-
-// watch(isCall, (elevators) => {
-//   isCall.count = elevators.floor == props.floor ? true : false
-// });
-
-// const isCall = () => elevators.floor === props.floor
-// onBeforeUpdate(() => {const isCall = elevators.value.floor === props.floor ? true : false})
-
-//  const isUp = computed(() => elevators.floor / props.floor > 1 ? true : false
-// )
 
 onMounted(() => {
   if (elevators.floor == props.floor) {
     isCall.count = true;
-  } else {
-    console.log(elevators.floor, props.floor);
   }
-
-  // eslint-disable-next-line no-const-assign
-  // isCall = elevators.floor === props.floor ? true : false
 });
 
-// onMounted(() => {
-//  computed(() => {
-//   const  isCall = false
-//   return isCall = elevators.value.floor === props.floor ? true : false
-// })
-// });
+watch(elevators, async() => {
+  const startFloor = localStorage.floor ? localStorage.floor : 1;
+  isCall.count = elevators.floor == props.floor ? true : false;
+  isUp.count = elevators.floor > startFloor && props.floor <= elevators.floor? true : false;
+});
+
+
 
 function buttonClick() {
   emit("handlerClick", props.floor);
 }
 
-// const emit = defineEmits(['handlerClic'])
-// function increaseFloor(f) {
-//   // for (let i = floors.value[0]; i <= f; i += 2) {
-//   //   floors.value.push(i);
-//   // }
-//   console.log(f)
-// }
+
 </script>
 
 <template>
@@ -96,7 +51,6 @@ function buttonClick() {
         class="fa-8x icon elevator-icon"
       />
     </div>
-    <!-- <p>{{elevators.floor}}</p> -->
     <ButtonElevator @click="buttonClick" :disabled="isCall.count" />
   </div>
 </template>
@@ -108,8 +62,6 @@ function buttonClick() {
   flex-direction: row;
   justify-content: center;
   align-items: flex-end;
-  /* padding-top: 20px; */
-  /* padding-bottom: 20px; */
   border: 1px solid gray;
 }
 
